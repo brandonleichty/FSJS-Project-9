@@ -5,11 +5,11 @@
         .module('app')
         .controller('RecipesController', RecipesController);
 
-    function RecipesController($scope, $http, $location, $routeParams, dataService) {
+    function RecipesController($scope, $location, $routeParams, dataService) {
         
     
 
-        // Get complete list of categories
+        // Get complete list of categories and assign the data to $scope.categories
         dataService.getCategories(function (response) {
             $scope.categories = response.data;
         });
@@ -22,6 +22,11 @@
 		$scope.delete = function(recipe_id, index) {
             dataService.deleteRecipe(recipe_id);
             $scope.recipes.splice(index, 1);
+        }
+
+
+        $scope.addRecipe = function() {
+            $location.path('/add');
         }
 	}
     
