@@ -8,7 +8,6 @@
     function RecipesController($scope, $location, $routeParams, dataService) {
         
     
-
         // Get complete list of categories and assign the data to $scope.categories
         dataService.getCategories(function (response) {
             $scope.categories = response.data;
@@ -17,6 +16,7 @@
         dataService.getRecipes(function (response){
             $scope.recipes = response.data;
         });
+
         
         //delete selected recipe from database and from $scope.recipe array
 		$scope.delete = function(recipe_id, index) {
@@ -27,6 +27,18 @@
 
         $scope.addRecipe = function() {
             $location.path('/add');
+        }
+
+         $scope.getRecipesByCategory = function(category) {
+            if (category === "All Categories") {
+                dataService.getRecipes(function(response) {
+                $scope.recipes = response.data;
+                });
+            } else {
+                dataService.getRecipesByCategory(category, function(response) {
+                $scope.recipes = response.data;
+                });
+            }
         }
 	}
     
